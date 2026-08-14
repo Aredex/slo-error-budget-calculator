@@ -9,6 +9,25 @@
 
 **SLO/Error Budget Calculator: Traduce fiabilidad a tiempo y decisiones operativas con supuestos visibles.**
 
+## Estado real de producción (post-implementación)
+
+- **Producción:** <https://slo-error-budget-calculator.pages.dev> (Cloudflare Pages, proyecto
+  `slo-error-budget-calculator`). El dominio `https://slo-error-budget-calculator.alexcuesta.dev`
+  quedará activo cuando el orquestador del portafolio adjunte el DNS del subdominio.
+- **Repositorio:** <https://github.com/Aredex/slo-error-budget-calculator>, rama `main`, tag `v1.0.0`.
+- **CI:** GitHub Actions (`quality` + `e2e`) en verde en el primer push (`gh run watch`), incluyendo
+  lint, typecheck, tests unit/contrato (58 assertions), build, y E2E + axe-core (7 escenarios) sin
+  violaciones de accesibilidad serias/críticas.
+- **Sustituto de las "5 pruebas observadas":** no hubo usuarios humanos disponibles en este entorno de
+  ejecución autónoma. En su lugar, el recorrido de 30/90s y los casos límite/adversariales quedaron
+  codificados como pruebas E2E reproducibles que corren en cada push:
+  `e2e/happy-path.spec.ts` (recorrido principal + cambio de parámetro + exportación + navegación por
+  teclado), `e2e/adversarial-and-errors.spec.ts` (rechazo de objetivo 100%, contenido hostil sin
+  ejecución, cancelación), `e2e/accessibility.spec.ts` (axe-core antes y después de ejecutar). Esto es
+  honesto: es un sustituto automatizado de la observación humana, no una validación con usuarios reales;
+  las métricas de "finalización ≥80%" de `02-prd.md` quedan pendientes hasta que existan pruebas con
+  personas.
+
 ## Caso de estudio
 
 1. Problema: porcentajes de disponibilidad no muestran cuánta indisponibilidad queda ni cuándo detener despliegues.
