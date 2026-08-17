@@ -8,7 +8,7 @@ test('entrada inválida (objetivo 100%) se rechaza con un mensaje accionable, no
   await page.getByRole('radio', { name: /Entrada inválida/ }).check();
   await page.getByRole('button', { name: 'Ejecutar escenario' }).click();
 
-  await expect(page.getByText('Entrada inválida', { exact: true })).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole('region', { name: 'Resultado' }).getByText('Entrada inválida', { exact: true })).toBeVisible({ timeout: 5000 });
   const findings = page.locator('.findings-list');
   await expect(findings).toContainText('100%');
   // No debe haber datos ricos (presupuesto/gráfica) para una entrada inválida.
